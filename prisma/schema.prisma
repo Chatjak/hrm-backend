@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model swiping {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee    String
+  record_date String
+  record_type String
+  record_time DateTime @default(now()) @updatedAt
+
+  @@unique([employee, record_date, record_type])
+}
+
+model swiping_history {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee    String
+  record_date String
+  record_type String
+  record_time DateTime @default(now()) @updatedAt
+}
+
+model employee_information {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee     String
+  name         String
+  department   String
+  position     String
+  email        String
+  phone        String
+  status       String
+  active_date  DateTime
+  expired_date DateTime
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+
+  @@unique([employee])
+}
+
+model employee_information_history {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee     String
+  name         String
+  department   String
+  position     String
+  email        String
+  phone        String
+  status       String
+  active_date  DateTime
+  expired_date DateTime
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+}
+
+model employee_salary {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee       String
+  emp_name       String
+  department     String
+  emp_position   String
+  salary         Float
+  effect_date    DateTime
+  house          Float    @default(0)
+  position       Float    @default(0)
+  special        Float    @default(0)
+  interpreter    Float    @default(0)
+  have_social    Boolean  @default(false)
+  social         Float    @default(0)
+  have_diligence Boolean  @default(false)
+  diligence      Float    @default(0)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now()) @updatedAt
+
+  @@unique([employee])
+}
+
+model employee_salary_history {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  employee       String
+  emp_name       String
+  department     String
+  emp_position   String
+  salary         Float
+  effect_date    DateTime
+  house          Float    @default(0)
+  position       Float    @default(0)
+  special        Float    @default(0)
+  interpreter    Float    @default(0)
+  have_social    Boolean  @default(false)
+  social         Float    @default(0)
+  have_diligence Boolean  @default(false)
+  diligence      Float    @default(0)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now()) @updatedAt
+}
+
+model payroll {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  from_date      DateTime
+  to_date        DateTime
+  total_employee Float
+  total_net_paid Float
+  total_social   Float
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now()) @updatedAt
+}
+
+model payroll_detail {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  payroll_id   String   @map("payroll_id")
+  employee     String
+  emp_name     String
+  department   String
+  emp_position String
+  work_days    Float
+  salary       Float
+  house        Float
+  position     Float
+  special      Float
+  interpreter  Float
+  other_income Float
+  total_income Float
+  social       Float
+  diligence    Float
+  tax          Float
+  other_deduce Float
+  total_deduce Float
+  net_income   Float
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+
+  @@unique([employee, payroll_id])
+}
+
+model payroll_detail_history {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  payroll_id   String   @map("payroll_id")
+  employee     String
+  emp_name     String
+  department   String
+  emp_position String
+  work_days    Float
+  salary       Float
+  house        Float
+  position     Float
+  special      Float
+  interpreter  Float
+  other_income Float
+  total_income Float
+  social       Float
+  diligence    Float
+  tax          Float
+  other_deduce Float
+  total_deduce Float
+  net_income   Float
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+}
