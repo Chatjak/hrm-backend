@@ -10,7 +10,12 @@ const createAuthSchema = z.object({
   email: z.string().email(),
   employee: z.string(),
   emp_name: z.string(),
-  controll: z.object({read: z.boolean(), write: z.boolean(), delete: z.boolean()}),
+  role: z.enum(["admin", "user"]).optional(),
+  controll: z.object({
+    read: z.boolean(),
+    write: z.boolean(),
+    delete: z.boolean(),
+  }),
   password: z.string().min(6),
 });
 

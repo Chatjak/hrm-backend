@@ -33,13 +33,14 @@ model swiping_history {
 
 model employee_information {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  employee     String   
+  employee     String
   name         String
   department   String
   position     String
+  id_card      String
+  gender       String
   email        String
   phone        String
-  status       String
   active_date  DateTime
   expired_date DateTime
   created_at   DateTime @default(now())
@@ -54,9 +55,10 @@ model employee_information_history {
   name         String
   department   String
   position     String
+  id_card      String
+  gender       String
   email        String
   phone        String
-  status       String
   active_date  DateTime
   expired_date DateTime
   created_at   DateTime @default(now())
@@ -78,7 +80,7 @@ model employee_salary {
   have_social    Boolean  @default(false)
   social         Float    @default(0)
   have_diligence Boolean  @default(false)
-  diligence      Float    @default(0)
+  diligence      String
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now()) @updatedAt
 
@@ -100,7 +102,7 @@ model employee_salary_history {
   have_social    Boolean  @default(false)
   social         Float    @default(0)
   have_diligence Boolean  @default(false)
-  diligence      Float    @default(0)
+  diligence      String
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now()) @updatedAt
 }
@@ -218,11 +220,11 @@ model employee_leave_information {
 
 model employee_leave_count {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  employee     String
-  leave_type   String
-  total_leave  Float
-  used_leave   Float
-  remain_leave Float
+  employee     String   @map("employee_information")
+  leave_type   String   @map("leave_type")
+  total_leave  Float    @default(0)
+  used_leave   Float    @default(0)
+  remain_leave Float    @default(0)
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now()) @updatedAt
 
@@ -243,4 +245,25 @@ model overtime {
   updated_at      DateTime @default(now()) @updatedAt
 
   @@unique([employee, start_date, end_date])
+}
+
+model department {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  dept_code   String
+  department  String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+
+  @@unique([dept_code])
+}
+
+model position {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  position    String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+
+  @@unique([position])
 }

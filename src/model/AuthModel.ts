@@ -22,6 +22,7 @@ export interface IAuth extends Document {
   emp_name: string;
   password: string;
   controll: IControll;
+  role: string;
   userImage?: Buffer;
   tokens: IToken[];
   toJSON(): object;
@@ -56,6 +57,11 @@ const AuthSchema = new Schema<IAuth>(
     },
     userImage: {
       type: Buffer,
+    },
+    role: {
+      type: String,
+      required: true,
+      default: "user",
     },
     controll: {
       read: {
